@@ -8,6 +8,7 @@ public class ResponseDto {
 
     private String statusCode;
     private String statusMsg;
+    private String statusInfo;
 
 
 

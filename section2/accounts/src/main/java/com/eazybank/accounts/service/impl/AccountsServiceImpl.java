@@ -2,8 +2,11 @@ package com.eazybank.accounts.service.impl;
 
 import com.eazybank.accounts.controller.entity.Accounts;
 import com.eazybank.accounts.controller.entity.Customer;
+import com.eazybank.accounts.dto.AccountsDto;
 import com.eazybank.accounts.dto.CustomerDto;
 import com.eazybank.accounts.exception.CustomerAlreadyExistsException;
+import com.eazybank.accounts.exception.ResourceNotFoundException;
+import com.eazybank.accounts.mapper.AccountsMapper;
 import com.eazybank.accounts.mapper.CustomerMapper;
 import com.eazybank.accounts.repository.AccountsRepository;
 import com.eazybank.accounts.repository.CustomerRepository;
@@ -13,25 +16,29 @@ import com.eazybank.accounts.constant.AccountsConstants;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
 
 @Service
 @AllArgsConstructor
-public class AccountsSerrvicceImpl implements IAccountsService {
+public class AccountsServiceImpl implements IAccountsService {
 
     private AccountsRepository accountsRepository;
     private CustomerRepository customerRepository;
 
 
     @Override
-    public void createAccount(CustomerDto customersDto) throws CustomerAlreadyExistsException {
+    public void createAccount(CustomerDto customersDto) throws CustomerAlreadyExistsException{
         Customer customer = CustomerMapper.mapToCustomer(customersDto, new Customer());
         Optional<Customer> optionalCustomer = customerRepository.findByMobileNumber(customersDto.getMobileNumber());
         if (optionalCustomer.isPresent()) {
-            throw new CustomerAlreadyExistsException("Customer is already registered with given mobileNumber"
+            throw new CustomerAlreadyExistsException("Customer is already registered with given mobileNumber "
                     + customersDto.getMobileNumber());
         }
+
+        customer.setCreatedAt(LocalDateTime.now());
+        customer.setCreatedBy("Anonymous");
         Customer savedCustomer = customerRepository.save(customer);
         accountsRepository.save(createNewAccount(savedCustomer));
     }
@@ -39,12 +46,29 @@ public class AccountsSerrvicceImpl implements IAccountsService {
     private Accounts createNewAccount(Customer customer) {
         Accounts newAccount = new Accounts();
         newAccount.setCustomerId(customer.getCustomerId());
-        long randomAccNumber = 1000000000000L* new Random().nextInt(900000000);
+        long randomAccNumber = Math.abs(1000000000000L* new Random().nextInt(900000000));
         newAccount.setAccountNumber(randomAccNumber);
 
         newAccount.setAccountType(AccountsConstants.SAVINGS);
         newAccount.setBranchAddress(AccountsConstants.ADDRESS);
+        newAccount.setCreatedAt(LocalDateTime.now());
+        newAccount.setCreatedBy("Anonymous");
         return newAccount;
+    }
+
+    @Override
+    public CustomerDto fetchAccount(String mobileNumber) {
+        Customer customer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(
+                ()->new ResourceNotFoundException("Customer", "mobileNumber",mobileNumber)
+        );
+
+        Accounts accounts = accountsRepository.findByCustomerId(customer.getCustomerId()).orElseThrow(
+                ()->new ResourceNotFoundException("Account", "customer", customer.getCustomerId().toString())
+        );
+
+        CustomerDto customerDto = CustomerMapper.mapToCustomerDto(customer, new CustomerDto());
+        customerDto.setAccountsDto(AccountsMapper.mapToAccountsDto(accounts, new AccountsDto()));
+        return customerDto;
     }
 
 }

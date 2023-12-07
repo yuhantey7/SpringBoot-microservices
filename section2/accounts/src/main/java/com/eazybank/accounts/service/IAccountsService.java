@@ -1,6 +1,7 @@
 package com.eazybank.accounts.service;
 
 import com.eazybank.accounts.dto.CustomerDto;
+
 public interface IAccountsService {
 
     /**
@@ -9,4 +10,15 @@ public interface IAccountsService {
      */
 
     void createAccount(CustomerDto customersDto);
+
+
+    /**
+     *
+     * @param mobileNumber - Input Mobile Number
+     * @return Accounts Details based on a given mobileNumber
+     */
+
+    CustomerDto fetchAccount(String mobileNumber);
+
+
 }
