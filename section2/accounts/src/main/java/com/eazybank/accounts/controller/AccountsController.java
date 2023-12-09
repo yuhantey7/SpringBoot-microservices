@@ -34,6 +34,21 @@ public class AccountsController {
                 .body(customerDto);
     }
 
+    @DeleteMapping("/delete")
+    public ResponseEntity<ResponseDto> deleteAccountDetails(@RequestParam String mobileNumber) {
+        boolean isDeleted = iAccountsService.deleteAccount(mobileNumber);
+        if(isDeleted){
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(new ResponseDto(AccountsConstants.STATUS_200 ,AccountsConstants.MESSAGE_200, "Delete successfully."));
+        } else {
+            return  ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(new ResponseDto(AccountsConstants.STATUS_417, AccountsConstants.MESSAGE_417_UPDATE,"Delete failed!"));
+        }
+    }
+
+
     @PutMapping("/update")
     public ResponseEntity<ResponseDto> updateAccountDetails(@RequestBody CustomerDto customerDto) {
         boolean isUpdated = iAccountsService.updateAccount(customerDto);
@@ -46,8 +61,10 @@ public class AccountsController {
                     .status(HttpStatus.BAD_REQUEST)
                     .body(new ResponseDto(AccountsConstants.STATUS_417, AccountsConstants.MESSAGE_417_UPDATE,"Update failed!"));
         }
-
     }
+
+
+
 
 
 
