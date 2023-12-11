@@ -1,4 +1,4 @@
-package com.eazybank.accounts.controller.entity;
+package com.eazybank.accounts.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

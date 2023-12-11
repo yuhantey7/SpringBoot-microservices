@@ -1,7 +1,7 @@
 package com.eazybank.accounts.mapper;
 
 
-import com.eazybank.accounts.controller.entity.Customer;
+import com.eazybank.accounts.entity.Customer;
 import com.eazybank.accounts.dto.CustomerDto;
 
 public class CustomerMapper {

@@ -1,7 +1,7 @@
 package com.eazybank.accounts.service.impl;
 
-import com.eazybank.accounts.controller.entity.Accounts;
-import com.eazybank.accounts.controller.entity.Customer;
+import com.eazybank.accounts.entity.Accounts;
+import com.eazybank.accounts.entity.Customer;
 import com.eazybank.accounts.dto.AccountsDto;
 import com.eazybank.accounts.dto.CustomerDto;
 import com.eazybank.accounts.exception.CustomerAlreadyExistsException;
@@ -16,7 +16,6 @@ import com.eazybank.accounts.constant.AccountsConstants;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
 
