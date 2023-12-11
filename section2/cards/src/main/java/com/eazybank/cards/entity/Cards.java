@@ -38,15 +38,15 @@ public class Cards extends BaseEntity {
     private Long cardNumber;
 
     @Column(name="card_type")
-    private Enum cardType;
+    private String cardType;
 
     @Column(name="total_limit")
-    private Integer totalLimit;
+    private int totalLimit;
 
     @Column(name="amount_used")
-    private Integer amountUsed;
+    private int amountUsed;
 
     @Column(name="available_amount")
-    private Integer availableAmount;
+    private int availableAmount;
 
 }
