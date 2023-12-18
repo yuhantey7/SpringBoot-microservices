@@ -11,7 +11,6 @@ import lombok.Data;
  */
 @Data
 public class CardDto {
-    private Long cardId;
 
     @Pattern(regexp = "[0-9]{10}", message = "Mobile Number cannot exceeds 10 digits!" )
     private String mobileNumber;
@@ -19,6 +18,5 @@ public class CardDto {
     private Long cardNumber;
     private String cardType;
     private int totalLimit;
-    private int amountUsed;
     private int availableAmount;
 }

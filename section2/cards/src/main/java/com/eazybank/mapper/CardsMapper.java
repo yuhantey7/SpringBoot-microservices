@@ -5,26 +5,43 @@ import com.eazybank.cards.entity.Cards;
 
 
 /**
- * If the method doesn't need to access or modify the internal state of an instance,
- * and it's intended to be a utility method for mapping without relying on object-specific
- * state, you can make it static.
- * If the method needs access to the state of an instance and is part of the behavior of
- * an object, it should be non-static.
- * In the context of mapping operations, where the method doesn't rely on the state of
- * an instance, making it static is a common and often appropriate choice. However,
- * if you need to access or modify the state of an instance during the mapping, a
- * non-static method might be more appropriate.
+ * This just more understanding by me
+ public class Main {
+ // Static method
+ static void myStaticMethod() {
+ System.out.println("Static methods can be called without creating objects");
+ }
+
+ // Public method
+ public void myPublicMethod() {
+ System.out.println("Public methods must be called by creating objects");
+ }
+
+ // Main method
+ public static void main(String[ ] args) {
+ myStaticMethod(); // Call the static method
+ // myPublicMethod(); This would output an error
+
+ Main myObj = new Main(); // Create an object of Main
+ myObj.myPublicMethod(); // Call the public method
+ }
+ }
  */
 
 public class CardsMapper {
 
-    public CardDto mapToCards(CardDto cardDto, Cards cards) {
-
-
+    public static CardDto mapToCards(CardDto cardDto, Cards cards) {
+        cardDto.setCardNumber(cards.getCardNumber());
+        cardDto.setTotalLimit(cards.getTotalLimit());
+        cardDto.setMobileNumber(cards.getMobileNumber());
+        cardDto.setCardType((cards.getCardType()));
+        return cardDto;
     }
-    public CardDto mapToCardsDto(Cards cards, CardDto cardDto) {
-
+    public static Cards mapToCardsDto(Cards cards, CardDto cardDto) {
+        cards.setCardNumber(cardDto.getCardNumber());
+        cards.setTotalLimit(cardDto.getTotalLimit());
+        cards.setMobileNumber(cardDto.getMobileNumber());
+        cards.setCardType((cardDto.getCardType()));
+        return cards;
     }
-
-
 }
