@@ -1,8 +1,9 @@
 package com.eazybank.cards.dto;
 
 
-import jakarta.validation.constraints.Pattern;
+
 import lombok.Data;
+import jakarta.validation.constraints.*;
 
 /**
  * Lombok is a Java library that helps reduce the verbosity of Java code

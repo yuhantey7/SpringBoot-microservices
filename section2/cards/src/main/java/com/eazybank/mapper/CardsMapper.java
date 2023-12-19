@@ -30,18 +30,20 @@ import com.eazybank.cards.entity.Cards;
 
 public class CardsMapper {
 
-    public static CardDto mapToCards(CardDto cardDto, Cards cards) {
+    public static CardDto mapToCards(Cards cards, CardDto cardDto) {
         cardDto.setCardNumber(cards.getCardNumber());
         cardDto.setTotalLimit(cards.getTotalLimit());
         cardDto.setMobileNumber(cards.getMobileNumber());
         cardDto.setCardType((cards.getCardType()));
+        cardDto.setAvailableAmount(cards.getAvailableAmount());
         return cardDto;
     }
-    public static Cards mapToCardsDto(Cards cards, CardDto cardDto) {
+    public static Cards mapToCardsDto(CardDto cardDto, Cards cards) {
         cards.setCardNumber(cardDto.getCardNumber());
         cards.setTotalLimit(cardDto.getTotalLimit());
         cards.setMobileNumber(cardDto.getMobileNumber());
         cards.setCardType((cardDto.getCardType()));
+        cards.setAvailableAmount(cardDto.getAvailableAmount());
         return cards;
     }
 }

@@ -4,10 +4,10 @@ import com.eazybank.cards.dto.CardDto;
 
 public interface ICardsService {
 
-    void createCard(CardDto cardDto);
-    CardDto fetchCard();
-    boolean updateCard();
-    boolean deleteCard();
+    void createCard(String mobileNumber);
+    CardDto fetchCard(String mobileNumber);
+    boolean updateCard(CardDto cardsDto);
+    boolean deleteCard(String mobileNumber);
 
 
 }
