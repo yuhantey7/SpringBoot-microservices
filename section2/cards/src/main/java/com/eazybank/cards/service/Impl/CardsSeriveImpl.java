@@ -47,7 +47,7 @@ public class CardsSeriveImpl implements ICardsService {
 
     @Override
     public boolean updateCard(CardDto cardsDto) {
-        Cards cards = cardsRepository.findByCardNumber(cardsDto.getCardNumber()).orElseThrow(
+        Cards cards = cardsRepository.findByCardNumber(String.valueOf(cardsDto.getCardNumber())).orElseThrow(
                 () -> new CardNotFoundException(cardsDto.getCardNumber().toString()));
         CardsMapper.mapToCards(cards, cardsDto);
         cardsRepository.save(cards);
@@ -59,7 +59,7 @@ public class CardsSeriveImpl implements ICardsService {
         Cards card = cardsRepository.findByMobileNumber(mobileNumber).orElseThrow(
                 () -> new CardNotFoundException(mobileNumber)
         );
-        cardsRepository.deleteCards(card.getCardId());
+        cardsRepository.deleteById(card.getCardId());
         return true;
     }
 }
